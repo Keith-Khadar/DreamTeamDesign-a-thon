@@ -10,7 +10,7 @@ public class Support : MonoBehaviour
     {
         if(collision.tag == "ImmuneCell")
         {
-            collision.GetComponent<targeting>().polarity = 0.25f;
+            collision.GetComponent<targeting>().polarity = 2f;
             collision.GetComponent<ParticleSystem>().Play();
         }
     }
