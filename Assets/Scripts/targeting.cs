@@ -19,7 +19,12 @@ public class targeting : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public Transform closestVirus;
+    public Transform closestWall;
+    public Transform closestCell;
+
     private Vector2 forceDir;
+    private Vector2 polarityDir;
     private float torqueDir;
 
     private float timeSinceLastDirectionChange;
@@ -30,9 +35,16 @@ public class targeting : MonoBehaviour
     {
         polarity_original = polarity;
         moveSpeed_original = moveSpeed;
-        GetComponent<ParticleSystem>().Pause();
         rb = GetComponent<Rigidbody2D>();
-        setMovement();
+
+
+        SetRandomDirection();
+
+
+        if (movement == 0) 
+        {
+            GetComponent<ParticleSystem>().Stop();
+        }
     }
 
     // Update is called once per frame
@@ -41,29 +53,48 @@ public class targeting : MonoBehaviour
         timeSinceLastDirectionChange += Time.deltaTime;
         if (timeSinceLastDirectionChange >= changeDirectionInterval)
         {
-            setMovement();
+            SetRandomDirection();
+            setTargetDirection();
             timeSinceLastDirectionChange = 0.0f;
         }
 
         rb.AddForce(forceDir * moveSpeed * Time.deltaTime);
         rb.AddTorque(torqueDir * rotationSpeed * Time.deltaTime);
 
+        rb.AddForce(polarityDir * polarity * Time.deltaTime);
+
     }
 
     // Movement Types 
-    void setMovement()
-    {
-        switch (movement) 
-        {
-            case 0:
-                SetRandomDirection();
-                break;
-        }
-    }
     void SetRandomDirection()
     {
         forceDir = new Vector2(Random.Range(-maxForce, maxForce), Random.Range(-maxForce, maxForce));
         torqueDir = Vector3.Cross(rb.velocity, forceDir).z;
+    }
+    void setTargetDirection()
+    {
+        polarityDir = Vector2.zero;
+        switch (movement)
+        {
+            case 0: // Regular attaker
+                if(closestVirus)
+                {
+                    polarityDir += (Vector2)(closestVirus.position - transform.position).normalized;
+                    if (runOnce) { StartCoroutine(lookat(closestVirus.position - transform.position)); }
+                }
+                    
+                    
+                break;
+            case 1: // Support 
+                if (closestCell)
+                {
+                    polarityDir += (Vector2)(closestCell.position - transform.position).normalized;
+                    if (runOnce) { StartCoroutine(lookat(closestCell.position - transform.position)); }
+                }
+                break;
+        }
+        if(closestWall)
+            polarityDir += (Vector2)(transform.position - closestWall.position).normalized;
     }
 
     // Kill Virus
@@ -76,17 +107,35 @@ public class targeting : MonoBehaviour
             rb.velocity = Vector2.zero;
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Virus")
         {
-            rb.AddForce((collision.transform.position - transform.position).normalized * polarity, ForceMode2D.Impulse);
-            Vector3 offset = collision.transform.position - transform.position;
-
-            if (runOnce)
-            {
-                StartCoroutine(lookat(offset));
-            }
+            closestVirus = collision.transform;
+        }
+        if (collision.gameObject.tag == "ImmuneCell")
+        {
+            closestCell = collision.transform;
+        }
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Exit")
+        {
+            if(Vector2.Distance(transform.position, collision.transform.position) < 2.5f)
+                closestWall = collision.transform;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Virus")
+        {
+            closestVirus = null;
+        }
+        if (collision.gameObject.tag == "ImmuneCell")
+        {
+            closestCell = null;
+        }
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Exit")
+        {
+            closestWall = null;
         }
     }
 

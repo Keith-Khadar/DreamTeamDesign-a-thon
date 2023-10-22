@@ -10,6 +10,8 @@ TagManager:
   - Exit
   - Weapon
   - ImmuneCell
+  - Wall
+  - Antibodies
   layers:
   - Default
   - TransparentFX
@@ -17,8 +19,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Cells
+  - Antibodies
   - 
   - 
   - 

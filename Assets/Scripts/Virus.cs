@@ -31,7 +31,7 @@ public class Virus : MonoBehaviour
         {
             collision.GetComponent<Infected>().health--;
 
-            explosion.SetActive(true);
+            Instantiate(explosion, transform.position, Quaternion.identity);
             Spawner.current--;
             Destroy(this.gameObject);
         }
