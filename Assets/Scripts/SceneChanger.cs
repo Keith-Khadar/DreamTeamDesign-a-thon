@@ -11,6 +11,6 @@ public class SceneChanger : MonoBehaviour
     }
     public void menuScene()
     {
-        SceneManager.LoadScene(0);
+        Application.ExternalEval("document.location.reload(true)");
     }
 }
