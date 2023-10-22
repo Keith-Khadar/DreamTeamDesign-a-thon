@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Vulnerable
+  - Virus
+  - Boundary
+  - Exit
+  - Weapon
+  - ImmuneCell
   layers:
   - Default
   - TransparentFX
