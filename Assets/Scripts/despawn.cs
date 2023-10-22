@@ -19,6 +19,10 @@ public class despawn : MonoBehaviour
         {
             Spawner.current--;
         }
+        if(gameObject.tag == "Antibodies")
+        {
+            Spawner.currentAnti--;
+        }
         if(explosion != null)
         {
             explosion.SetActive(true);

@@ -9,18 +9,27 @@ public class Virus : MonoBehaviour
     Rigidbody2D rb;
     public float speed;
 
+    float currentTime = 0;
+    float maxSpeed;
+    float startSpeed;
+
     public GameObject explosion;
 
     void Start()
     {
+        maxSpeed = speed * 300;
+        startSpeed = speed;
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Exit").transform;
     }
 
     void Update()
     {
+        currentTime += Time.deltaTime;
         // Move the virus towards the target
         rb.AddForce((target.position - transform.position).normalized * speed * Time.deltaTime);
+
+        speed = Mathf.Lerp(startSpeed, maxSpeed, currentTime / 300f);
         
     }
 
@@ -30,6 +39,8 @@ public class Virus : MonoBehaviour
         if(collision.tag == "Vulnerable" && collision.GetComponent<Infected>().health > 0)
         {
             collision.GetComponent<Infected>().health--;
+            infection.infectionAmount += 0.002f;
+
 
             Instantiate(explosion, transform.position, Quaternion.identity);
             Spawner.current--;

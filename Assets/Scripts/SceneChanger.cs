@@ -5,8 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneChanger : MonoBehaviour
 {
-    void nextScene()
+    public void nextScene()
     {
         SceneManager.LoadScene(1);
+    }
+    public void menuScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }

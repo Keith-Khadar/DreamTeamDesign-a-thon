@@ -19,7 +19,7 @@ public class Infected : MonoBehaviour
     }
     void Update()
     {
-        if(health < 0)
+        if(health <= 0)
         {
             spawner.SetActive(true);
             GetComponent<SpriteRenderer>().color = Color.black;

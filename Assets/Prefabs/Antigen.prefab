@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 1563952717659064557}
   - component: {fileID: 3563134284392894318}
   - component: {fileID: -8259730816337821152}
+  - component: {fileID: 2909458619476917978}
   m_Layer: 7
   m_Name: Antigen
   m_TagString: Antibodies
@@ -168,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28f2d329fe717894a86ef409d0f2bf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1000
+  speed: 5000
 --- !u!58 &1563952717659064557
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -246,3 +247,17 @@ MonoBehaviour:
   sprites:
   - {fileID: -837537606, guid: ac205fad5e9c9274193dd9e4feb277ee, type: 3}
   - {fileID: 328136555, guid: ac205fad5e9c9274193dd9e4feb277ee, type: 3}
+--- !u!114 &2909458619476917978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152875082760541299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538fd974a34bcd9419113b739788c9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 10
+  explosion: {fileID: 0}

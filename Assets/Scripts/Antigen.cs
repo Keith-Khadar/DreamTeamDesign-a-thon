@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Antigen : MonoBehaviour
 {
+    public static int collisions = 0;
+
     private Transform virus;
     private CircleCollider2D circleCollider;
     private Rigidbody2D rb;
@@ -44,6 +47,15 @@ public class Antigen : MonoBehaviour
         {
             Destroy(collision.gameObject);
             Spawner.current--;
+            Spawner.currentAnti--;
+
+            collisions++;
+            if (collisions > 4)
+            {
+                Score.Instance.ATP++;
+                collisions = 0;
+            }
+
             Destroy(gameObject);
         }
     }
