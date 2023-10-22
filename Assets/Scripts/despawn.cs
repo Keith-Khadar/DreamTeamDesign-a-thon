@@ -14,6 +14,10 @@ public class despawn : MonoBehaviour
 
     IEnumerator death(float lifetime)
     {
+        if (Difficulty.RomanButton)
+        {
+            lifetime /= 2;
+        }
         yield return new WaitForSeconds(lifetime);
         if(gameObject.tag == "Virus")
         {

@@ -44,7 +44,16 @@ public class Spawner : MonoBehaviour
             dir = (edge.position - center.position).normalized;
         }
         startRate = rate;
-        maxRate = rate * 2;
+
+        if (Difficulty.RomanButton)
+        {
+            maxRate = rate / 5;
+        }
+        else
+        {
+            maxRate = rate * 2;
+        }
+
         startDist = dist;
         maxDist = dist * 2;
     }

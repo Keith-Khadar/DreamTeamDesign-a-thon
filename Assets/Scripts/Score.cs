@@ -10,6 +10,13 @@ public class Score : MonoBehaviour
     public int ATP = 5;
     public float immunity = 0;
 
+    private void Start()
+    {
+        if (Difficulty.RomanButton)
+        {
+            ATP = 0;
+        }
+    }
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -31,7 +38,15 @@ public class Score : MonoBehaviour
 
         if (time > 14)
         {
-            ATP += 16;
+            if(!Difficulty.RomanButton) 
+            {
+                ATP += 16;
+            }
+            else
+            {
+                ATP += 8;
+            }
+            
             time = 0;
         }
 

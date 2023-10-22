@@ -17,7 +17,14 @@ public class Virus : MonoBehaviour
 
     void Start()
     {
-        maxSpeed = speed * 300;
+        if (Difficulty.RomanButton)
+        {
+            maxSpeed = speed * 3000;
+        }
+        else
+        {
+            maxSpeed = speed * 300;
+        }
         startSpeed = speed;
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindWithTag("Exit").transform;
@@ -39,7 +46,16 @@ public class Virus : MonoBehaviour
         if(collision.tag == "Vulnerable" && collision.GetComponent<Infected>().health > 0)
         {
             collision.GetComponent<Infected>().health--;
-            infection.infectionAmount += 0.002f;
+
+            if (Difficulty.RomanButton)
+            {
+                infection.infectionAmount += 0.001f;
+            }
+            else
+            {
+                infection.infectionAmount += 0.002f;
+            }
+            
 
 
             Instantiate(explosion, transform.position, Quaternion.identity);
